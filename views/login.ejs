@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-zinc-900 h-screen">
+<a href="/" class="text-indigo-400 hover:underline top-4 left-4">Go Back To Main Page</a>
+<div class="flex items-center justify-center">
+    <div class="bg-zinc-800 p-8 rounded-lg w-96 shadow-lg">
+        <h2 class="text-2xl font-semibold text-white text-center mb-6">Login</h2>
+        
+        <form action="/login" method="POST">
+            <div class="mb-4">
+                <label for="email" class="block text-white">Email</label>
+                <input type="email" id="email" name="email" class="w-full p-3 mt-1 rounded-lg bg-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="mb-6">
+                <label for="password" class="block text-white">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-3 mt-1 rounded-lg bg-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Login</button>
+        </form>
+
+        <div class="mt-4 text-center">
+            <a href="/forgot-password" class="text-sm text-blue-400 hover:text-blue-600">Forgot your password?</a>
+        </div>
+
+        <div class="mt-4 text-center">
+            <p class="text-sm text-white">Don't have an account? <a href="/" class="text-blue-400 hover:text-blue-600">Sign up</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
