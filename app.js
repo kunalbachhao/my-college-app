@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
@@ -6,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const userModel = require("./models/user.js");
 const college = require("./models/college.js");
-require('dotenv').config();
 
 const mongoose = require('mongoose');
 
@@ -14,11 +15,12 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
-  console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB");
 }).catch(err => {
   console.error("MongoDB connection error:", err);
 });
-
+console.log("MONGO_URI env var:", process.env.MONGO_URI);
+console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
 
 app.set("view engine", "ejs");
 app.use(cookieParser());
@@ -45,7 +47,7 @@ app.post("/signup", async function(req, res) {
     // Check if the email already exists
     let existingUser = await userModel.findOne({ email });
     if (existingUser) {
-        return res.render('error');
+        return res.render('error', { errorType: 'user_already_registered'});
     }
 
     // Hash the password and store it
@@ -86,7 +88,7 @@ app.get("/login", function(req, res) {
 
 app.post("/login", async function(req, res) {
     let User = await userModel.findOne({ email: req.body.email });
-    if (!User) return res.render('error');
+    if (!User) return res.render('error', { errorType: 'user_not_found' });
 
     console.log("Entered Password:", req.body.password);  // Log entered password
     console.log("Stored Hashed Password:", User.password); // Log stored hash
@@ -104,7 +106,7 @@ app.post("/login", async function(req, res) {
             res.cookie("token", token);
             res.render('dashboard', { user: User });
         } else {
-            res.render('error');
+            res.render('error', { errorType: 'invalid_password' });
         }
     });
 });
